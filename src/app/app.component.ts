@@ -9,7 +9,6 @@ import {ChartType} from "angular-google-charts";
 })
 export class AppComponent {
   title = 'angular-charts';
-
   complexData = {
     "data": [
       {
