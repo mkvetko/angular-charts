@@ -28,6 +28,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 # Deployment to GitHub Pages
 
+Install (once): `npm install -g angular-cli-ghpages`
+
 Build: `ng build --prod --base-href https://mkvetko.github.io/angular-charts/`
 
 Deploy: `angular-cli-ghpages -d dist/agular-charts/ --no-silent` 
