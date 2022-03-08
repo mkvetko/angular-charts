@@ -1,0 +1,13 @@
+<mat-tab-group class="content">
+  <mat-tab label="angular-google-charts">
+    <google-chart class="main-graph" *ngFor="let item of complexData.visualizations" [type]="item.chartType" [title]="item.title"
+                  [data]="dataMapGoogle.get(item.id)"></google-chart>
+  </mat-tab>
+  <mat-tab label="Plotly.js">
+    <plotly-plot class="main-graph" *ngFor="let item of complexData.visualizations" [data]="dataMapPlotly.get(item.id)"
+                 [layout]="item"></plotly-plot>
+  </mat-tab>
+  <mat-tab label="Apache echarts">
+    <div class="main-graph" *ngFor="let item of complexData.visualizations" echarts [options]="dataMapEcharts.get(item.id)"></div>
+  </mat-tab>
+</mat-tab-group>

@@ -1,14 +1,12 @@
-<mat-tab-group class="mat-typography">
-  <mat-tab label="angular-google-charts">
-    <google-chart *ngFor="let item of complexData.visualizations" [type]="item.chartType" [title]="item.title"
-                  [data]="dataMapGoogle.get(item.id)"></google-chart>
-  </mat-tab>
-  <mat-tab label="Plotly.js">
-    <plotly-plot *ngFor="let item of complexData.visualizations" [data]="dataMapPlotly.get(item.id)"
-                 [layout]="item"></plotly-plot>
-  </mat-tab>
-  <mat-tab label="Apache echarts">
-    <div *ngFor="let item of complexData.visualizations" echarts [options]="dataMapEcharts.get(item.id)"></div>
-  </mat-tab>
-</mat-tab-group>
+<mat-toolbar>
+  Angular playground project
+</mat-toolbar>
 
+<mat-sidenav-container class="mat-typography">
+  <mat-sidenav mode="side" opened="true" class="mat-elevation-z8">
+    <app-side-navigation></app-side-navigation>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-graphs class="content mat-elevation-z8"></app-graphs>
+  </mat-sidenav-content>
+</mat-sidenav-container>
