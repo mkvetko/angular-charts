@@ -32,6 +32,6 @@ Install (once): `npm install -g angular-cli-ghpages`
 
 Build: `ng build --base-href https://mkvetko.github.io/angular-charts/`
 
-Deploy: `angular-cli-ghpages -d dist/agular-charts/ --no-silent` 
+Deploy: `angular-cli-ghpages -d dist/angular-charts/ --no-silent` 
 
 Navigate: https://mkvetko.github.io/angular-charts/
