@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ChartType} from "angular-google-charts";
 import {map, now} from "lodash";
+import {DataService} from "../services/data.service";
 
 @Component({
   selector: 'app-graphs',
@@ -9,67 +10,19 @@ import {map, now} from "lodash";
 })
 export class GraphsComponent implements OnInit {
   title = 'angular-charts';
-  complexData = {
-    "data": [
-      {
-        "period": "20220110",
-        "modelMetrics": {
-          "value1": 1,
-          "value2": 2,
-          "value3": 3
-        }
-      },
-      {
-        "period": "20220111",
-        "modelMetrics": {
-          "value1": 11,
-          "value2": 22,
-          "value3": 33
-        }
-      },
-      {
-        "period": "20220112",
-        "modelMetrics": {
-          "value1": 111,
-          "value2": 222,
-          "value3": 333
-        }
-      }
-    ]
-    ,
-    "visualizations": [
-      {
-        "id": 1,
-        "title": "Pie",
-        "chartType": ChartType.PieChart,
-        "xValue": "period",
-        "yValue": "modelMetrics.value1"
-      },
-      {
-        "id": 2,
-        "title": "Line",
-        "chartType": ChartType.LineChart,
-        "xValue": "period",
-        "yValue": "modelMetrics.value2"
-      },
-      {
-        "id": 3,
-        "title": "Bar",
-        "chartType": ChartType.BarChart,
-        "xValue": "period",
-        "yValue": "modelMetrics.value3"
-      }
-    ]
+  complexData:any;
 
-  }
-  loaded = false;
   dataMapGoogle = new Map();
   dataMapPlotly = new Map();
   dataMapEcharts = new Map();
   option: any;
 
+  constructor(private dataService:DataService) {
+  }
+
   ngOnInit(): void {
-    for(let i=0; i<this.complexData.visualizations.length; ++i) {
+    this.complexData = this.dataService.getModelStatistics();
+    for (let i = 0; i < this.complexData.visualizations.length; ++i) {
       this.dataMapGoogle.set(this.complexData.visualizations[i].id, this.buildGoogleData(this.complexData.visualizations[i]))
       this.dataMapPlotly.set(this.complexData.visualizations[i].id, this.buildPlotlyData(this.complexData.visualizations[i]))
       this.dataMapEcharts.set(this.complexData.visualizations[i].id, this.buildEchartsOptions(this.complexData.visualizations[i]))
@@ -128,8 +81,6 @@ export class GraphsComponent implements OnInit {
         throw new Error('Unknown chart type: ' + type)
     }
   }
-
-
 
 
   private buildEchartsOptions(visualization: any) {
@@ -207,6 +158,7 @@ export class GraphsComponent implements OnInit {
 
     return option;
   }
+
   private buildPieEchartData(visualization: any) {
     let x = map(this.complexData.data, visualization.xValue)
     let y = map(this.complexData.data, visualization.yValue)
@@ -220,6 +172,7 @@ export class GraphsComponent implements OnInit {
     }
     return result;
   }
+
   private translateChartTypeForEcharts(type: ChartType): any {
     switch (type) {
       case ChartType.BarChart:
@@ -231,5 +184,9 @@ export class GraphsComponent implements OnInit {
       default:
         throw new Error('Unknown chart type: ' + type)
     }
+  }
+
+  public jsonToStr(value: any): string {
+    return value.text;
   }
 }
